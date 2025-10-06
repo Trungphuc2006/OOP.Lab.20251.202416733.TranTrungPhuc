@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class Ex62 {
     public static void main(String args[]) {
         Scanner keyboard = new Scanner(System.in);
@@ -11,7 +10,7 @@ public class Ex62 {
         double dHeight = keyboard.nextDouble();
         // similar to other data types
         //nextByte(), nextShort(), nextLong()
-        //nextFloat(), nextBoolean()
+        //nextFloat(), nextBoolean()Tr
         System.out.println("Mrs./Ms. " + strName + ", " + iAge + " years old. " +
                            "Your height is " + dHeight + "m.");
     }
