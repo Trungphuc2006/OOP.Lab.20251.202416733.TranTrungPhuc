@@ -4,7 +4,7 @@ public class Ex225 extends JFrame {
     private JTextField num1Field, num2Field, resultField;
     private JButton sumButton, diffButton, prodButton, quotButton;
     public Ex225() {
-        setTitle("Simple Calculator");
+        setTitle("Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(6, 2, 10, 10));
         setSize(300, 250);
