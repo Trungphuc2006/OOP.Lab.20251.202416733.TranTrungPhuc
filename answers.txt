@@ -1,0 +1,43 @@
+Lab 03 – Basic Object-Oriented Techniques
+
+1. Branching and Release Flow
+
+2. Method Overloading
+- Overloading by type difference → the array version adds multiple discs at once.
+- Overloading by number of parameters → the two-parameter version adds exactly two discs.
+- Using varargs (...) is preferred since it allows flexible input without manually creating arrays.
+
+3. Parameter Passing in Java
+- swap(jungleDVD, cinderellaDVD) → titles do not swap because the references are copied.
+- changeTitle(jungleDVD, cinderellaDVD.getTitle()) → title of jungleDVD changes because
+  the object that the reference points to is modified.
+A correct swap() example:
+public static void swap(DigitalVideoDisc dvd1, DigitalVideoDisc dvd2) {
+    DigitalVideoDisc temp = new DigitalVideoDisc(dvd1.getTitle());
+    dvd1.setTitle(dvd2.getTitle());
+    dvd2.setTitle(temp.getTitle());
+}
+
+4. Debugging in Eclipse
+
+5. Classifier Member vs. Instance Member
+private static int nbDigitalVideoDiscs = 0; // Classifier member
+private int id;                             // Instance member
+public DigitalVideoDisc(...) {
+    nbDigitalVideoDiscs++;
+    this.id = nbDigitalVideoDiscs;
+}
+Each new DigitalVideoDisc gets a unique ID, while the counter is shared by all discs.
+
+6. New Methods in Cart Class
+Write a toString() method for the DigitalVideoDisc class. What should be the return type of
+this method?
+Answer: The toString() method in Java must return a String type.
+
+9. String, StringBuffer, and StringBuilder
+Observation from ConcatenationInLoops.java:
+- Using '+' operator in loops is slow (creates many new String objects).
+- StringBuffer (synchronized) and StringBuilder (non-synchronized) are much faster.
+Garbage creation test:
+- Using + operator → high memory usage, possible freeze.
+- Using StringBuffer → much lower garbage creation and faster runtime.
