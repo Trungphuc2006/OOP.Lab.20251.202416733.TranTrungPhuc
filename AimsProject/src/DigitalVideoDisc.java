@@ -1,22 +1,22 @@
-public class DigitalVideoDisk {
-	public DigitalVideoDisk(String title) {
+public class DigitalVideoDisc {
+	public DigitalVideoDisc(String title) {
 		super();
 		this.title = title;
 	}
-	public DigitalVideoDisk(String title, String category, float cost) {
+	public DigitalVideoDisc(String title, String category, float cost) {
 		super();
 		this.title = title;
 		this.category = category;
 		this.cost = cost;
 	}
-    public DigitalVideoDisk(String title, String category, String director, float cost) {
+    public DigitalVideoDisc(String title, String category, String director, float cost) {
 		super();
 		this.title = title;
 		this.category = category;
 		this.director = director;
 		this.cost = cost;
 	}
-	public DigitalVideoDisk(String title, String category, String director, int length, float cost) {
+	public DigitalVideoDisc(String title, String category, String director, int length, float cost) {
 		super();
 		this.title = title;
 		this.category = category;
