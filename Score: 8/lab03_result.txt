@@ -1,0 +1,4 @@
+Score: 8/10
+Comments:
+- Thiếu package test trong src
+- Thiếu GarbageCreator & NoGarbage
