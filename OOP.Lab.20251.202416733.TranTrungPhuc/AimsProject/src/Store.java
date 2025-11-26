@@ -1,40 +1,62 @@
+import java.util.ArrayList;
+import hust.soict.dsai.aims.media.Media;
 public class Store {
-    private DigitalVideoDisc[] itemsInStore = new DigitalVideoDisc[100];
-    private int numberOfItems = 0;
-    public void addDVD(DigitalVideoDisc disc) {
-        if (numberOfItems < itemsInStore.length) {
-            itemsInStore[numberOfItems] = disc;
-            numberOfItems++;
-            System.out.println("The disc \"" + disc.getTitle() + "\" has been added to the store.");
+    private ArrayList<Media> itemsInStore = new ArrayList<Media>();
+    public void addMedia(Media media) {
+        if (itemsInStore.contains(media)) {
+            System.out.println("The media \"" + media.getTitle() + "\" is already in the store.");
         } else {
-            System.out.println("The store is full. Cannot add more DVDs.");
+            itemsInStore.add(media);
+            System.out.println("The media \"" + media.getTitle() + "\" has been added to the store.");
         }
     }
-    public void removeDVD(DigitalVideoDisc disc) {
-        boolean found = false;
-        for (int i = 0; i < numberOfItems; i++) {
-            if (itemsInStore[i].equals(disc)) {
-                found = true;
-                // Shift elements left
-                for (int j = i; j < numberOfItems - 1; j++) {
-                    itemsInStore[j] = itemsInStore[j + 1];
-                }
-                itemsInStore[numberOfItems - 1] = null;
-                numberOfItems--;
-                System.out.println("The disc \"" + disc.getTitle() + "\" has been removed from the store.");
-                break;
-            }
+    public void removeMedia(Media media) {
+        if (itemsInStore.remove(media)) {
+            System.out.println("The media \"" + media.getTitle() + "\" has been removed from the store.");
+        } else {
+            System.out.println("The media was not found in the store.");
         }
-        if (!found) {
-            System.out.println("The disc was not found in the store.");
+    }
+    public void removeMedia(int index) {
+        if (index >= 0 && index < itemsInStore.size()) {
+            Media removed = itemsInStore.remove(index);
+            System.out.println("The media \"" + removed.getTitle() + "\" has been removed from the store.");
+        } else {
+            System.out.println("Invalid index.");
         }
     }
     public void printStore() {
         System.out.println("\n***********************STORE***********************");
         System.out.println("Available Items:");
-        for (int i = 0; i < numberOfItems; i++) {
-            System.out.println((i + 1) + ". " + itemsInStore[i].toString());
+        int index = 1;
+        for (Media media : itemsInStore) {
+            System.out.println((index) + ". " + media.toString());
+            index++;
         }
+        System.out.println("Total items: " + itemsInStore.size());
         System.out.println("***************************************************");
+    }
+    public Media searchByTitle(String title) {
+        for (Media media : itemsInStore) {
+            if (media.getTitle().equalsIgnoreCase(title)) {
+                return media;
+            }
+        }
+        return null;
+    }
+    public ArrayList<Media> getItemsInStore() {
+        return itemsInStore;
+    }
+    public Media getMedia(int index) {
+        if (index >= 0 && index < itemsInStore.size()) {
+            return itemsInStore.get(index);
+        }
+        return null;
+    }
+    public boolean isEmpty() {
+        return itemsInStore.isEmpty();
+    }
+    public int getNumberOfItems() {
+        return itemsInStore.size();
     }
 }

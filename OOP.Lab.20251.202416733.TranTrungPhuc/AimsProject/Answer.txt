@@ -1,0 +1,76 @@
+9. Which classes are aggregates of other classes? Checking all constructors of whole classes if they initialize for their parts? 
+Aggregate Classes (Whole-Part Relationships):
+Cart - Media
+- Cart aggregates multiple Media objects
+- Cart constructor should initialize itemsOrdered ArrayList
+Store - Media 
+- Store aggregates multiple Media objects
+- Store constructor should initialize itemsInStore ArrayList
+Book - String (authors)
+- Book aggregates multiple author names
+- Book constructor should initialize authors ArrayList
+CompactDisc - Track
+CompactDisc aggregates multiple Track objects
+CompactDisc constructor should initialize tracks ArrayList
+10.When overriding the equals() method of the Object class, you will have to cast the Object parameter obj to the type of Object that you are dealing with. For example, in the Media class, you must cast the Object obj to a Media, and then check the equality of the two objects’ attributes as the above requirements (i.e. title for Media; title and length for Track). If the passing object is not an instance of Media, what happens? 
+If the passing object is not an instance of Media:
+- The condition !(obj instanceof Media) evaluates to true
+- The method immediately returns false
+- No ClassCastException occurs because we never attempt to cast the object
+- The method safely handles the incompatible type by returning false
+11. Iterate through the list and print out the information of the media by using toString() method. Observe what happens and explain in detail. 
+CompactDisc Output:
+CD - Greatest Hits - Music - Artist: Various Artists - Director: Various Directors - Length: 390 seconds - Cost: 15.99 $ - Tracks: 2
+  Track 1: Track - Song One - 180 seconds
+  Track 2: Track - Song Two - 210 seconds
+DigitalVideoDisc Output:
+DVD - The Matrix - Sci-Fi - Wachowski Sisters - 136 minutes: 12.99 $
+Book Output:
+BOOK - Java Programming - Education - Authors: John Doe, Jane Smith - Cost: 29.99 $ - Content Length: 28 tokens
+What Makes This Work:
+- Inheritance Hierarchy: All classes extend Media
+- Method Overriding: Each subclass provides its own toString() implementation
+- Upcasting: Storing subclasses as superclass references
+- Dynamic Method Dispatch: JVM calls the appropriate method at runtime
+12. Alternatively, to compare items in the cart, instead of using Comparator, we can use the Comparable interface and override the compareTo()method. You can refer to the Java docs to see the information of this interface. Suppose we are taking this Comparable interface approach. 
+What class should implement the Comparable interface? 
+Answer: The Media class should implement the Comparable<Media> interface.
+- All media types (Book, CD, DVD) inherit from Media
+- This allows natural ordering for all media subclasses
+- The comparison logic applies to the entire media hierarchy
+
+In those classes, how should you implement the compareTo()method be to reflect the ordering that we want? 
+@Override
+public int compareTo(Media other) {
+    int titleComparison = this.title.compareToIgnoreCase(other.title);
+    if (titleComparison != 0) {
+        return titleComparison;
+    }
+    return Float.compare(other.cost, this.cost);
+}
+
+Can we have two ordering rules of the item (by title then cost and by cost then title) if we use this Comparable interface approach? 
+Answer: NO, we cannot have two ordering rules with just the Comparable interface.
+- Comparable defines only ONE natural ordering per class
+- The compareTo() method can only implement one comparison logic
+- If we need multiple sorting criteria, we must use Comparator
+
+Suppose the DVDs has a different ordering rule from the other media types, that is by title, then decreasing length, then cost. How would you modify your code to allow this?
+Answer: Use DVD-specific Comparator.
+public class DvdComparatorByTitleLengthCost implements Comparator<Media> {
+    @Override
+    public int compare(Media media1, Media media2) {
+        if (media1 instanceof DigitalVideoDisc && media2 instanceof DigitalVideoDisc) {
+            DigitalVideoDisc dvd1 = (DigitalVideoDisc) media1;
+            DigitalVideoDisc dvd2 = (DigitalVideoDisc) media2;
+            int titleComparison = dvd1.getTitle().compareToIgnoreCase(dvd2.getTitle());
+            if (titleComparison != 0) return titleComparison;
+            int lengthComparison = Integer.compare(dvd2.getLength(), dvd1.getLength());
+            if (lengthComparison != 0) return lengthComparison;
+            return Float.compare(dvd2.getCost(), dvd1.getCost());
+        }
+        return media1.compareTo(media2);
+    }
+}
+public static final Comparator<Media> COMPARE_DVD_SPECIFIC = new DvdComparatorByTitleLengthCost();
+
