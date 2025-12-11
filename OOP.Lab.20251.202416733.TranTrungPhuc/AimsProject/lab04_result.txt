@@ -1,0 +1,4 @@
+Score: 7/10
+Comments:
+- Làm nhầm branch
+- Use case & class diagram giống hệt lab 2
