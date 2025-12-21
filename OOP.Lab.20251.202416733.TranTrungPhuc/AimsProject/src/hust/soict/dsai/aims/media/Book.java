@@ -1,26 +1,63 @@
 package hust.soict.dsai.aims.media;
 import java.util.ArrayList;
+import java.util.List;
 public class Book extends Media {
-    private ArrayList<String> authors;
-    public Book(int id, String title, String category, float cost) {
-    	super(id, title, category, cost);
-        this.authors = new ArrayList<>();
+    private List<String> authors = new ArrayList<>(); 
+    public Book() {
+        super();
     }
-    public ArrayList<String> getAuthors() {
-        return authors;
+    public Book(String title) {
+        super(title);
     }
-    public void addAuthor(String authorName) {
+    public Book(String title, String category) {
+        super(title, category);
+    }
+    public Book(String title, String category, float cost) {
+        super(title, category, cost);
+    }
+    public Book(String title, String category, float cost, List<String> authors) {
+        super(title, category, cost);
+        if (authors != null) {
+            this.authors = new ArrayList<>(authors);   
+        if (authorName == null || authorName.trim().isEmpty()) {
+            System.out.println("Author name cannot be empty!");
+            return;
+        }
         if (!authors.contains(authorName)) {
             authors.add(authorName);
+            System.out.println("Author \"" + authorName + "\" has been added.");
         } else {
-            System.out.println("Author already exists in the list.");
+            System.out.println("Author \"" + authorName + "\" is already in the list.");
         }
     }
     public void removeAuthor(String authorName) {
-        if (authors.contains(authorName)) {
-            authors.remove(authorName);
-        } else {
-            System.out.println("Author not found in the list.");
+        if (authorName == null) {
+            System.out.println("Author name cannot be null!");
+            return;
         }
+        if (authors.remove(authorName)) {
+            System.out.println("Author \"" + authorName + "\" has been removed.");
+        } else {
+            System.out.println("Author \"" + authorName + "\" not found in the list.");
+        }
+    }
+    public List<String> getAuthors() {
+        return new ArrayList<>(authors);
+    }
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Book - ").append(getTitle());
+        if (getCategory() != null) sb.append(" - ").append(getCategory());
+        sb.append(" - Authors: [");
+        if (!authors.isEmpty()) {
+            for (int i = 0; i < authors.size(); i++) {
+                sb.append(authors.get(i));
+                if (i < authors.size() - 1) sb.append(", ");
+            }
+        }
+        sb.append("]");
+        sb.append(" - ").append(getCost()).append(" $");
+        return sb.toString();
     }
 }

@@ -1,0 +1,93 @@
+package hust.soict.dsai.aims.cart;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import hust.soict.dsai.aims.media.Media;
+public class Cart {
+    public static final int MAX_NUMBERS_ORDERED = 20;
+    private List<Media> itemsOrdered = new ArrayList<>();
+    public void addMedia(Media media) {
+        if (media == null) {
+            System.out.println("Cannot add null media.");
+            return;
+        }
+        if (itemsOrdered.size() >= MAX_NUMBERS_ORDERED) {
+            System.out.println("Cart is full! Cannot add more items.");
+            return;
+        }
+        if (itemsOrdered.contains(media)) {
+            System.out.println("Media \"" + media.getTitle() + "\" is already in the cart.");
+        } else {
+            itemsOrdered.add(media);
+            System.out.println("Media \"" + media.getTitle() + "\" has been added to the cart.");
+        }
+    }
+    public void removeMedia(Media media) {
+        if (media == null) {
+            System.out.println("Cannot remove null media.");
+            return;
+        }
+        if (itemsOrdered.remove(media)) {
+            System.out.println("Media \"" + media.getTitle() + "\" has been removed from the cart.");
+        } else {
+            System.out.println("Media \"" + media.getTitle() + "\" not found in the cart.");
+        }
+    }
+    public float totalCost() {
+        float total = 0.0f;
+        for (Media media : itemsOrdered) {
+            total += media.getCost();
+        }
+        return total;
+    }
+    public void print() {
+        System.out.println("*********************** CART ***********************");
+        System.out.println("Ordered Items:");
+        if (itemsOrdered.isEmpty()) {
+            System.out.println("The cart is empty.");
+        } else {
+            for (int i = 0; i < itemsOrdered.size(); i++) {
+                System.out.println((i + 1) + ". " + itemsOrdered.get(i));
+            }
+        }
+        System.out.printf("Total cost: %.2f $\n", totalCost());
+        System.out.println("***************************************************");
+    }
+    public void searchById(int id) {
+        boolean found = false;
+        for (Media media : itemsOrdered) {
+            if (media.getId() == id) {
+                System.out.println("Found: " + media);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No media found with ID: " + id);
+        }
+    }
+    public void searchByTitle(String title) {
+        boolean found = false;
+        for (Media media : itemsOrdered) {
+            if (media.getTitle().toLowerCase().contains(title.toLowerCase())) {
+                System.out.println("Found: " + media);
+                found = true;
+            }  
+        }
+        if (!found) {
+            System.out.println("No media found with title containing: \"" + title + "\"");
+        }
+    }
+    public void sortByTitleCost() {
+        Collections.sort(itemsOrdered, Media.COMPARE_BY_TITLE_COST);
+        System.out.println("Cart has been sorted by title (A-Z), then by cost (descending).");
+    }
+
+    // Method 2: sort theo cost giảm dần → title
+    public void sortByCostTitle() {
+        Collections.sort(itemsOrdered, Media.COMPARE_BY_COST_TITLE);
+        System.out.println("Cart has been sorted by cost (descending), then by title (A-Z).");
+    }
+    public List<Media> getItemsOrdered() {
+        return itemsOrdered;
+    }
+}

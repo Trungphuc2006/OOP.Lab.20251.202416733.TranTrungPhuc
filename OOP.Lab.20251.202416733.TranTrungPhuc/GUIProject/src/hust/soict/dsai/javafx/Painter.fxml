@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="480.0" prefWidth="640.0"
+            xmlns="http://javafx.com/javafx/25.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="hust.soict.dsai.javafx.PainterController">
+
+    <!-- Define ToggleGroup directly on BorderPane (this is the correct way) -->
+    <fx:define>
+        <ToggleGroup fx:id="toolGroup"/>
+    </fx:define>
+
+    <padding>
+        <Insets top="8" right="8" bottom="8" left="8"/>
+    </padding>
+
+    <center>
+        <Pane fx:id="drawingAreaPane"
+              style="-fx-background-color: white;"
+              onMouseDragged="#drawingAreaMouseDragged"/>
+    </center>
+
+    <left>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <TitledPane text="Tools" collapsible="false">
+                <content>
+                    <VBox spacing="8">
+                        <RadioButton text=" Pen"
+                                     toggleGroup="$toolGroup"
+                                     selected="true"
+                                     userData="PEN"/>
+                        <RadioButton text=" Eraser"
+                                     toggleGroup="$toolGroup"
+                                     userData="ERASER"/>
+                        <Separator/>
+                        <Button text="Clear" onAction="#clearButtonPressed"/>
+                    </VBox>
+                </content>
+            </TitledPane>
+        </VBox>
+    </left>
+
+</BorderPane>
